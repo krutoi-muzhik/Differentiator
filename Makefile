@@ -1,19 +1,19 @@
 TARGET = diff
 CC = gcc
 CLIBS = -lm
-CFLAGS = -c -Wall
+CFLAGS = -Wall
 
-$(TARGET): main.o $(TARGET).o Mathtree.o
-	$(CC) $< -o $@
-
-Mathtree.o: MathTree/io/mathio.c MathTree/src/tree.c
-	$(CC) $(CFLAGS) $(CLIBS) $< -o $@
+$(TARGET): main.o $(TARGET).o tree.o
+	$(CC) main.o $(TARGET).o tree.o $(CLIBS) -o $(TARGET)
 
 $(TARGET).o: src/diff.c
-	$(CC) $(CFLAGS) $(CLIBS) $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
+
+tree.o: MathTree/src/mathtree.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(CLIBS) $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 run:
 	./$(TARGET)

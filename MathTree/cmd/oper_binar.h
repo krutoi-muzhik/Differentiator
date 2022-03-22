@@ -1,5 +1,3 @@
-#include "../io/mathio.h"
-
 DEF_BINAR (PLUS, '+', 1, {
 	return Count (branch->left) + Count (branch->right);
 })

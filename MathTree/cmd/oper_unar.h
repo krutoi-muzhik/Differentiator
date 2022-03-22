@@ -1,5 +1,3 @@
-#include "../io/mathio.h"
-
 #define LEFT branch->left
 
 #define OPERAND Count (LEFT)
@@ -71,7 +69,6 @@ DEF_UNAR (ATANH, "atgan", {
 DEF_UNAR (EXP, "exp", {
 	return exp (OPERAND);
 })
-
 DEF_UNAR (SQRT, "sqrt", {
 	return sqrt (OPERAND);
 })

@@ -1,5 +1,5 @@
-#include "../include/diff.h"
+// #include "../include/diff.h"
 
-int main () {
-	exit (EXIT_SUCCESS);
-}
+// int main () {
+// 	exit (EXIT_SUCCESS);
+// }
