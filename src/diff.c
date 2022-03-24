@@ -28,16 +28,13 @@ branch_t *BranchCopy_ (branch_t *oldbranch, branch_t *parent) {
 	return newbranch;
 }
 
-branch_t *BranchDiff (branch_t *oldbranch) {
-	branch_t *newbranch = Branch (NULL, POISON);
+branch_t *BranchDiff_ (branch_t *oldbranch, branch_t *parent) {
 	switch (oldbranch->type):
 		case NUM:
-			newbranch->type = NUM;
-			newbranch->data = 0;
+			branch_t *newbranch = Branch_ (parent, 0, NUM);
 			break;
 		case VAR:
-			newbranch->type = NUM;
-			newbranch->data = 1;
+			branch_t *newbranch = Branch_ (parent, 1, NUM);
 			break;
 		case BINAR:
 			#define DEF_BINAR(oper, oper_num, count_, diff_) {	\
@@ -64,9 +61,8 @@ branch_t *BranchDiff (branch_t *oldbranch) {
 	return newbranch;
 }
 
-branch_t *BranchDiff_ (branch_t *oldbranch, branch_t *parent) {
-	branch_t *newbranch = BranchDiff (oldbranch);
-	newbranch->parent = parent;
+branch_t *BranchDiff (branch_t *oldbranch) {
+	branch_t *newbranch = BranchDiff_ (oldbranch, NULL);
 	return newbranch;
 }
 

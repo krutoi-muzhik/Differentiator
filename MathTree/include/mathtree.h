@@ -1,6 +1,6 @@
-#ifndef TREE_H
+#ifndef MATHTREE_H
 
-#define TREE_H
+#define MATHTREE_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,27 +37,31 @@ typedef enum ERRORS {
 	INVALID_SIZE
 } tree_error_t;
 
-size_t GetNum (char *buf, branch_t *branch);
-size_t GetPlus (char *buf, branch_t **current);
-int isoper (char c);
-double Count (branch_t *branch);
-void Calculate (tree_t *tree);
-void Input (const char *pathname, tree_t *tree);
-void WriteBase (FILE *out, branch_t *branch);
-void SaveBase (const char *pathname, tree_t* tree);
-size_t GetPow (char *buf, branch_t **current);
-size_t GetLog (char *buf, branch_t **current);
-size_t GetLow (char *buf, branch_t *branch);
-size_t GetFunc (char *buf, branch_t *current);
-size_t GetVar (char *buf, branch_t *branch);
 branch_t *Branch (branch_t *parent, data_t data);
 branch_t *Branch_ (branch_t *parent, data_t data, branch_type_t type);
 void RecursiveDestruct (branch_t *branch);
 void TreeConstruct (tree_t *tree);
 void TreeDestruct (tree_t *tree);
+void InsertBranch (branch_t *parent, size_t dir, data_t data);
+
+size_t GetNum (char *buf, branch_t *branch);
+size_t GetPlus (char *buf, branch_t **current);
+size_t GetPow (char *buf, branch_t **current);
+size_t GetLog (char *buf, branch_t **current);
+size_t GetLow (char *buf, branch_t *branch);
+size_t GetFunc (char *buf, branch_t *current);
+size_t GetVar (char *buf, branch_t *branch);
+
+int isoper (char c);
+
+double Count (branch_t *branch);
+void Calculate (tree_t *tree);
+
+void Input (const char *pathname, tree_t *tree);
+void WriteBase (FILE *out, branch_t *branch);
+void SaveBase (const char *pathname, tree_t* tree);
 void Graph (FILE *graph, branch_t *branch);
 void GVDump (const char *pathname, tree_t *tree);
-void InsertBranch (branch_t *parent, size_t dir, data_t data);
 
 enum SIZES {
 	BUF_SIZE = 1024,
