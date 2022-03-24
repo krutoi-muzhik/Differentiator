@@ -135,9 +135,9 @@ void InsertBranch (branch_t *parent, size_t dir, data_t data) {
 
 double Count (branch_t *branch) {
 	if (branch->type == BINAR) {
-		#define DEF_BINAR(oper_num, oper, priority, performance) {	\
+		#define DEF_BINAR(oper_num, oper, count_, diff_) {	\
 			if (branch->data == oper_num) {							\
-				performance											\
+				count_												\
 			}														\
 		}															// end of define
 																	// return is containeed in performance
@@ -145,12 +145,12 @@ double Count (branch_t *branch) {
 		#undef DEF_BINAR
 
 	} else if (branch->type == UNAR) {
-		#define DEF_UNAR(oper_num, oper, performance) {		\
-			if (branch->data == oper_num) {					\
-				performance									\
-			}												\
-		}													// end of define
-															// return is containeed in performance
+		#define DEF_UNAR(oper_num, oper, count_, diff_) {		\
+			if (branch->data == oper_num) {						\
+				diff_											\
+			}													\
+		}														// end of define
+																// return is containeed in performance
 		#include "../cmd/oper_unar.h"
 		#undef DEF_UNAR
 	} else if (branch->type == NUM) {
@@ -316,13 +316,13 @@ size_t GetFunc (char *buf, branch_t *current) {
 	skiptill ('(')
 	len++;
 
-	#define DEF_UNAR(oper_num, oper, performance) {				\
-		if (!strcmp (oper, func)) {								\
-			current->data = oper_num;							\
-			current->left = Branch (current, POISON);			\
-			len += GetPlusMinus (buf + len, &(current->left));	\
-		}														\
-	}															// end of define
+	#define DEF_UNAR(oper_num, oper, count_, diff_) {				\
+		if (!strcmp (oper, func)) {									\
+			current->data = oper_num;								\
+			current->left = Branch (current, POISON);				\
+			len += GetPlusMinus (buf + len, &(current->left));		\
+		}															\
+	}																// end of define
 
 	#include "../cmd/oper_unar.h"
 	#undef DEF_UNAR
@@ -340,7 +340,9 @@ int isoper (char c) {
 	return 0;
 }
 
-void Input (const char *pathname, tree_t *tree) {
+tree_t *Input (const char *pathname) {
+	tree_t tree;
+	TreeConstruct (&tree);
 	FILE *inp = fopen (pathname, "r+");
 	char buf[BUF_SIZE];
 	size_t len = 0;
@@ -351,6 +353,8 @@ void Input (const char *pathname, tree_t *tree) {
 	len = GetPlusMinus (buf, &tmp);
 	tree->root = tmp;
 	printf ("nread = %ld, len = %ld\n", nread, len);
+
+	return tree;
 }
 
 void WriteBase (FILE *out, branch_t *branch) {
