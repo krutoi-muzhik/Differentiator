@@ -1,7 +1,7 @@
 #define L BranchCopy (oldbranch->left)
 #define R BranchCopy (oldbranch->right)
-#define dR BranchDiff (oldbranch->right)
-#define dL BranchDiff (oldbranch->left)
+#define dR BranchDiff_ (oldbranch->right)
+#define dL BranchDiff_ (oldbranch->left)
 #define ADD_(right, left) Branch_ (ADD, BINAR, right, left)
 #define SUB_(right, left) Branch_ (SUB, BINAR, right, left)
 #define MUL_(right, left) Branch_ (MUL, BINAR, right, left)
@@ -25,13 +25,13 @@ DEF_BINAR (SUB, '-', {
 DEF_BINAR (MUL, '*', {
 	return Count (branch->left) * Count (branch->right);
 }, {
-	branch_t *newbranch = ADD_ (MUL_ (dL, R), MUL_ (L, dR));
+	return ADD_ (MUL_ (dL, R), MUL_ (L, dR));
 })
 
 DEF_BINAR (DIV, '/', {
 	return Count (branch->left) / Count (branch->right);
 }, {
-	branch_t *newbranch = DIV_ (SUB_ (MUL_ (dL, R), MUL_ (L, dR)), POW_ (R, Branch_ (2, NUM, NULL, NULL)));
+	return DIV_ (SUB_ (MUL_ (dL, R), MUL_ (L, dR)), POW_ (R, Branch_ (2, NUM, NULL, NULL)));
 })
 
 DEF_BINAR (POW, '^', {
@@ -43,7 +43,7 @@ DEF_BINAR (POW, '^', {
 DEF_BINAR (LOG, "log", {
 	return log (Count (branch->right)) / log (Count (branch->left));
 }, {
-	return ADD_ (DIV_ (dR, MUL_ (R, LN_ (L))), DIV_ (LN (R), MUL_ (L, POW_ (LN (L), 2))));
+	return ADD_ (DIV_ (dR, MUL_ (R, LN_ (L))), DIV_ (LN_ (R), MUL_ (L, POW_ (LN_ (L), Branch_ (2, NUM, NULL, NULL)))));
 })
 
 #undef L

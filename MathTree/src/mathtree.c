@@ -1,7 +1,7 @@
 #include "../include/mathtree.h"
 #include <math.h>
 
-branch_t *Branch (data_t data, branch_t *left,, branch_t *right) {
+branch_t *Branch (data_t data, branch_t *left, branch_t *right) {
 	branch_t *branch = calloc (1, sizeof (branch_t));
 	branch->data = data;
 	branch->left = left;
@@ -10,7 +10,7 @@ branch_t *Branch (data_t data, branch_t *left,, branch_t *right) {
 }
 
 branch_t *Branch_ (data_t data, branch_type_t type, branch_t *left, branch_t *right) {
-	branch_t *branch = Branch (parent, data);
+	branch_t *branch = Branch (data, left, right);
 	branch->type = type;
 	return branch;
 }
@@ -136,7 +136,7 @@ double Count (branch_t *branch) {
 	} else if (branch->type == UNAR) {
 		#define DEF_UNAR(oper_num, oper, count_, diff_) {		\
 			if (branch->data == oper_num) {						\
-				diff_											\
+				count_											\
 			}													\
 		}														// end of define
 																// return is containeed in performance
@@ -322,8 +322,7 @@ int isoper (char c) {
 }
 
 tree_t *Input (const char *pathname) {
-	tree_t tree;
-	TreeConstruct (&tree);
+	tree_t *tree = TreeConstruct ();
 	FILE *inp = fopen (pathname, "r+");
 	char buf[BUF_SIZE];
 	size_t len = 0;

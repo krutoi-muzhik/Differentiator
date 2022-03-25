@@ -2,10 +2,11 @@
 #include "MathTree/include/mathtree.h"
 
 int main () {
-	tree_t tree;
-	TreeConstruct (&tree);
-	Input ("input.txt", &tree);
+	tree_t *tree = Input ("input.txt");
+	GVDump ("graphviz/old.gv", tree);
 
-	GVDump ("graphviz/graph.gv", &tree);
+	tree_t *newtree = Differentiate (tree);
+	GVDump ("graphviz/new.gv", newtree);
+
 	exit (EXIT_SUCCESS);
 }

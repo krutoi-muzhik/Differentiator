@@ -10,7 +10,7 @@
 
 #define POISON 0xBEEBA
 
-typedef double data_t;
+typedef int data_t;
 
 typedef enum TYPES {
 	BINAR,
@@ -39,7 +39,7 @@ typedef enum ERRORS {
 branch_t *Branch (data_t data, branch_t *left, branch_t *right);
 branch_t *Branch_ (data_t data, branch_type_t type, branch_t *left, branch_t *right);
 void RecursiveDestruct (branch_t *branch);
-void TreeConstruct (tree_t *tree);
+tree_t *TreeConstruct ();
 void TreeDestruct (tree_t *tree);
 void InsertBranch (branch_t *parent, size_t dir, data_t data);
 
@@ -57,7 +57,7 @@ int isoper (char c);
 double Count (branch_t *branch);
 void Calculate (tree_t *tree);
 
-void Input (const char *pathname, tree_t *tree);
+tree_t *Input (const char *pathname);
 void WriteBase (FILE *out, branch_t *branch);
 void SaveBase (const char *pathname, tree_t* tree);
 void Graph (FILE *graph, branch_t *branch);
@@ -70,7 +70,7 @@ enum SIZES {
 
 enum BINARS {
 	ADD = '+',
-	MINUS = '-',
+	SUB = '-',
 	POW = '^',
 	MUL = '*',
 	DIV = '/',
