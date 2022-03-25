@@ -1,0 +1,58 @@
+digraph TREE {
+
+	peak0x560dbac42690 [label = "+"];
+		peak0x560dbac42690 -> peak0x560dbac42660
+	peak0x560dbac42660 [label = "-"];
+		peak0x560dbac42660 -> peak0x560dbac42630
+	peak0x560dbac42630 [label = "-"];
+		peak0x560dbac42630 -> peak0x560dbac42330
+	peak0x560dbac42330 [label = "2" shape = box];
+		peak0x560dbac42630 -> peak0x560dbac42450
+	peak0x560dbac42450 [label = "*"];
+		peak0x560dbac42450 -> peak0x560dbac42420
+	peak0x560dbac42420 [label = "^"];
+		peak0x560dbac42420 -> peak0x560dbac423f0
+	peak0x560dbac423f0 [label = "x" shape = box];
+		peak0x560dbac42420 -> peak0x560dbac423c0
+	peak0x560dbac423c0 [label = "3" shape = box];
+		peak0x560dbac42450 -> peak0x560dbac422a0
+	peak0x560dbac422a0 [label = "/"];
+		peak0x560dbac422a0 -> peak0x560dbac426f0
+	peak0x560dbac426f0 [label = "3" shape = box];
+		peak0x560dbac422a0 -> peak0x560dbac421e0
+	peak0x560dbac421e0 [label = "x" shape = box];
+		peak0x560dbac42660 -> peak0x560dbac42150
+	peak0x560dbac42150 [label = "cos"];
+		peak0x560dbac42150 -> peak0x560dbac42120
+	peak0x560dbac42120 [label = "x" shape = box];
+		peak0x560dbac42690 -> peak0x560dbac420f0
+	peak0x560dbac420f0 [label = "+"];
+		peak0x560dbac420f0 -> peak0x560dbac420c0
+	peak0x560dbac420c0 [label = "*"];
+		peak0x560dbac420c0 -> peak0x560dbac42090
+	peak0x560dbac42090 [label = "*"];
+		peak0x560dbac42090 -> peak0x560dbac42060
+	peak0x560dbac42060 [label = "-1" shape = box];
+		peak0x560dbac42090 -> peak0x560dbac42030
+	peak0x560dbac42030 [label = "*"];
+		peak0x560dbac42030 -> peak0x560dbac426c0
+	peak0x560dbac426c0 [label = "2" shape = box];
+		peak0x560dbac42030 -> peak0x560dbac41eb0
+	peak0x560dbac41eb0 [label = "sin"];
+		peak0x560dbac41eb0 -> peak0x560dbac41e20
+	peak0x560dbac41e20 [label = "*"];
+		peak0x560dbac41e20 -> peak0x560dbac41e50
+	peak0x560dbac41e50 [label = "2" shape = box];
+		peak0x560dbac41e20 -> peak0x560dbac41e80
+	peak0x560dbac41e80 [label = "x" shape = box];
+		peak0x560dbac420c0 -> peak0x560dbac41df0
+	peak0x560dbac41df0 [label = "x" shape = box];
+		peak0x560dbac420f0 -> peak0x560dbac41d00
+	peak0x560dbac41d00 [label = "cos"];
+		peak0x560dbac41d00 -> peak0x560dbac41d30
+	peak0x560dbac41d30 [label = "*"];
+		peak0x560dbac41d30 -> peak0x560dbac41d60
+	peak0x560dbac41d60 [label = "2" shape = box];
+		peak0x560dbac41d30 -> peak0x560dbac41d90
+	peak0x560dbac41d90 [label = "x" shape = box];
+}

@@ -10,7 +10,7 @@
 #define DIV_(right, left) Branch_ (DIV, BINAR, right, left)
 #define POW_(right, left) Branch_ (POW, BINAR, right, left)
 #define LOG_(right, left) Branch_ (LOG, BINAR, right, left)
-#define MINUS_(branch) SUB_ (Branch_ (0, NUM, NULL, NULL), branch)
+#define MINUS_(branch) MUL_ (Branch_ (-1, NUM, NULL, NULL), branch)
 #define SQUARE_(branch) POW_ (branch, Branch_ (2, NUM, NULL, NULL))
 #define SQRT_(branch) POW_ (branch, DIV_ (Branch_ (1, NUM, NULL, NULL), Branch_ (2, NUM, NULL, NULL)))
 #define LN_(left) Branch_ (LN, UNAR, left, NULL)

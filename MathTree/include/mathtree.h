@@ -58,8 +58,8 @@ double Count (branch_t *branch);
 void Calculate (tree_t *tree);
 
 tree_t *Input (const char *pathname);
-void WriteBase (FILE *out, branch_t *branch);
-void SaveBase (const char *pathname, tree_t* tree);
+void BranchPut (FILE *out, branch_t *branch);
+void TreeOut (const char *pathname, tree_t* tree);
 void Graph (FILE *graph, branch_t *branch);
 void GVDump (const char *pathname, tree_t *tree);
 

@@ -337,25 +337,25 @@ tree_t *Input (const char *pathname) {
 	return tree;
 }
 
-void WriteBase (FILE *out, branch_t *branch) {
+void BranchOut (FILE *out, branch_t *branch) {
 	if (branch->type == NUM) {
 		fprintf (out, "%d ", branch->data);
 		return;
 	}
 	if (branch->type == BINAR) {
-		WriteBase (out, branch->left);
+		BranchOut (out, branch->left);
 		fprintf (out, "%c ", branch->data);
-		WriteBase (out, branch->right);
+		BranchOut (out, branch->right);
 		return;
 	}
 	printf ("unknown branch type\n");
 	return;
 }
 
-void SaveBase (const char *pathname, tree_t* tree) {
+void TreeOut (const char *pathname, tree_t* tree) {
 	FILE *out = fopen (pathname, "w");
 	fprintf (out, "CALCULATOR by krutoi_muzhik crated this base\n\n");
-	WriteBase (out, tree->root);
+	BranchOut (out, tree->root);
 	fclose (out);
 	return;
 }

@@ -1,108 +1,108 @@
 digraph TREE {
 
-	peak0x55e28783a690 [label = "+"];
-		peak0x55e28783a690 -> peak0x55e28783a660
-	peak0x55e28783a660 [label = "-"];
-		peak0x55e28783a660 -> peak0x55e28783a630
-	peak0x55e28783a630 [label = "-"];
-		peak0x55e28783a630 -> peak0x55e28783a600
-	peak0x55e28783a600 [label = "-"];
-		peak0x55e28783a600 -> peak0x55e28783a5d0
-	peak0x55e28783a5d0 [label = "+"];
-		peak0x55e28783a5d0 -> peak0x55e28783a5a0
-	peak0x55e28783a5a0 [label = "*"];
-		peak0x55e28783a5a0 -> peak0x55e28783a570
-	peak0x55e28783a570 [label = "0" shape = box];
-		peak0x55e28783a5a0 -> peak0x55e28783a540
-	peak0x55e28783a540 [label = "x" shape = box];
-		peak0x55e28783a5d0 -> peak0x55e28783a510
-	peak0x55e28783a510 [label = "*"];
-		peak0x55e28783a510 -> peak0x55e28783a4e0
-	peak0x55e28783a4e0 [label = "2" shape = box];
-		peak0x55e28783a510 -> peak0x55e28783a4b0
-	peak0x55e28783a4b0 [label = "1" shape = box];
-		peak0x55e28783a600 -> peak0x55e28783a480
-	peak0x55e28783a480 [label = "0" shape = box];
-		peak0x55e28783a630 -> peak0x55e28783a450
-	peak0x55e28783a450 [label = "*"];
-		peak0x55e28783a450 -> peak0x55e28783a420
-	peak0x55e28783a420 [label = "^"];
-		peak0x55e28783a420 -> peak0x55e28783a3f0
-	peak0x55e28783a3f0 [label = "x" shape = box];
-		peak0x55e28783a420 -> peak0x55e28783a3c0
-	peak0x55e28783a3c0 [label = "3" shape = box];
-		peak0x55e28783a450 -> peak0x55e28783a390
-	peak0x55e28783a390 [label = "+"];
-		peak0x55e28783a390 -> peak0x55e28783a360
-	peak0x55e28783a360 [label = "*"];
-		peak0x55e28783a360 -> peak0x55e28783a330
-	peak0x55e28783a330 [label = "0" shape = box];
-		peak0x55e28783a360 -> peak0x55e28783a300
-	peak0x55e28783a300 [label = "ln"];
-		peak0x55e28783a300 -> peak0x55e28783a2d0
-	peak0x55e28783a2d0 [label = "x" shape = box];
-		peak0x55e28783a390 -> peak0x55e28783a2a0
-	peak0x55e28783a2a0 [label = "/"];
-		peak0x55e28783a2a0 -> peak0x55e28783a270
-	peak0x55e28783a270 [label = "*"];
-		peak0x55e28783a270 -> peak0x55e28783a240
-	peak0x55e28783a240 [label = "1" shape = box];
-		peak0x55e28783a270 -> peak0x55e28783a210
-	peak0x55e28783a210 [label = "3" shape = box];
-		peak0x55e28783a2a0 -> peak0x55e28783a1e0
-	peak0x55e28783a1e0 [label = "x" shape = box];
-		peak0x55e28783a660 -> peak0x55e28783a1b0
-	peak0x55e28783a1b0 [label = "*"];
-		peak0x55e28783a1b0 -> peak0x55e28783a180
-	peak0x55e28783a180 [label = "1" shape = box];
-		peak0x55e28783a1b0 -> peak0x55e28783a150
-	peak0x55e28783a150 [label = "cos"];
-		peak0x55e28783a150 -> peak0x55e28783a120
-	peak0x55e28783a120 [label = "x" shape = box];
-		peak0x55e28783a690 -> peak0x55e28783a0f0
-	peak0x55e28783a0f0 [label = "+"];
-		peak0x55e28783a0f0 -> peak0x55e28783a0c0
-	peak0x55e28783a0c0 [label = "*"];
-		peak0x55e28783a0c0 -> peak0x55e28783a090
-	peak0x55e28783a090 [label = "-"];
-		peak0x55e28783a090 -> peak0x55e28783a060
-	peak0x55e28783a060 [label = "0" shape = box];
-		peak0x55e28783a090 -> peak0x55e28783a030
-	peak0x55e28783a030 [label = "*"];
-		peak0x55e28783a030 -> peak0x55e28783a000
-	peak0x55e28783a000 [label = "+"];
-		peak0x55e28783a000 -> peak0x55e287839fd0
-	peak0x55e287839fd0 [label = "*"];
-		peak0x55e287839fd0 -> peak0x55e287839fa0
-	peak0x55e287839fa0 [label = "0" shape = box];
-		peak0x55e287839fd0 -> peak0x55e287839f70
-	peak0x55e287839f70 [label = "x" shape = box];
-		peak0x55e28783a000 -> peak0x55e287839f40
-	peak0x55e287839f40 [label = "*"];
-		peak0x55e287839f40 -> peak0x55e287839f10
-	peak0x55e287839f10 [label = "2" shape = box];
-		peak0x55e287839f40 -> peak0x55e287839ee0
-	peak0x55e287839ee0 [label = "1" shape = box];
-		peak0x55e28783a030 -> peak0x55e287839eb0
-	peak0x55e287839eb0 [label = "sin"];
-		peak0x55e287839eb0 -> peak0x55e287839e20
-	peak0x55e287839e20 [label = "*"];
-		peak0x55e287839e20 -> peak0x55e287839e50
-	peak0x55e287839e50 [label = "2" shape = box];
-		peak0x55e287839e20 -> peak0x55e287839e80
-	peak0x55e287839e80 [label = "x" shape = box];
-		peak0x55e28783a0c0 -> peak0x55e287839df0
-	peak0x55e287839df0 [label = "x" shape = box];
-		peak0x55e28783a0f0 -> peak0x55e287839dc0
-	peak0x55e287839dc0 [label = "*"];
-		peak0x55e287839dc0 -> peak0x55e287839d00
-	peak0x55e287839d00 [label = "cos"];
-		peak0x55e287839d00 -> peak0x55e287839d30
-	peak0x55e287839d30 [label = "*"];
-		peak0x55e287839d30 -> peak0x55e287839d60
-	peak0x55e287839d60 [label = "2" shape = box];
-		peak0x55e287839d30 -> peak0x55e287839d90
-	peak0x55e287839d90 [label = "x" shape = box];
-		peak0x55e287839dc0 -> peak0x55e287839cd0
-	peak0x55e287839cd0 [label = "1" shape = box];
+	peak0x560dbac42690 [label = "+"];
+		peak0x560dbac42690 -> peak0x560dbac42660
+	peak0x560dbac42660 [label = "-"];
+		peak0x560dbac42660 -> peak0x560dbac42630
+	peak0x560dbac42630 [label = "-"];
+		peak0x560dbac42630 -> peak0x560dbac42600
+	peak0x560dbac42600 [label = "-"];
+		peak0x560dbac42600 -> peak0x560dbac425d0
+	peak0x560dbac425d0 [label = "+"];
+		peak0x560dbac425d0 -> peak0x560dbac425a0
+	peak0x560dbac425a0 [label = "*"];
+		peak0x560dbac425a0 -> peak0x560dbac42570
+	peak0x560dbac42570 [label = "0" shape = box];
+		peak0x560dbac425a0 -> peak0x560dbac42540
+	peak0x560dbac42540 [label = "x" shape = box];
+		peak0x560dbac425d0 -> peak0x560dbac42510
+	peak0x560dbac42510 [label = "*"];
+		peak0x560dbac42510 -> peak0x560dbac424e0
+	peak0x560dbac424e0 [label = "2" shape = box];
+		peak0x560dbac42510 -> peak0x560dbac424b0
+	peak0x560dbac424b0 [label = "1" shape = box];
+		peak0x560dbac42600 -> peak0x560dbac42480
+	peak0x560dbac42480 [label = "0" shape = box];
+		peak0x560dbac42630 -> peak0x560dbac42450
+	peak0x560dbac42450 [label = "*"];
+		peak0x560dbac42450 -> peak0x560dbac42420
+	peak0x560dbac42420 [label = "^"];
+		peak0x560dbac42420 -> peak0x560dbac423f0
+	peak0x560dbac423f0 [label = "x" shape = box];
+		peak0x560dbac42420 -> peak0x560dbac423c0
+	peak0x560dbac423c0 [label = "3" shape = box];
+		peak0x560dbac42450 -> peak0x560dbac42390
+	peak0x560dbac42390 [label = "+"];
+		peak0x560dbac42390 -> peak0x560dbac42360
+	peak0x560dbac42360 [label = "*"];
+		peak0x560dbac42360 -> peak0x560dbac42330
+	peak0x560dbac42330 [label = "0" shape = box];
+		peak0x560dbac42360 -> peak0x560dbac42300
+	peak0x560dbac42300 [label = "ln"];
+		peak0x560dbac42300 -> peak0x560dbac422d0
+	peak0x560dbac422d0 [label = "x" shape = box];
+		peak0x560dbac42390 -> peak0x560dbac422a0
+	peak0x560dbac422a0 [label = "/"];
+		peak0x560dbac422a0 -> peak0x560dbac42270
+	peak0x560dbac42270 [label = "*"];
+		peak0x560dbac42270 -> peak0x560dbac42240
+	peak0x560dbac42240 [label = "1" shape = box];
+		peak0x560dbac42270 -> peak0x560dbac42210
+	peak0x560dbac42210 [label = "3" shape = box];
+		peak0x560dbac422a0 -> peak0x560dbac421e0
+	peak0x560dbac421e0 [label = "x" shape = box];
+		peak0x560dbac42660 -> peak0x560dbac421b0
+	peak0x560dbac421b0 [label = "*"];
+		peak0x560dbac421b0 -> peak0x560dbac42180
+	peak0x560dbac42180 [label = "1" shape = box];
+		peak0x560dbac421b0 -> peak0x560dbac42150
+	peak0x560dbac42150 [label = "cos"];
+		peak0x560dbac42150 -> peak0x560dbac42120
+	peak0x560dbac42120 [label = "x" shape = box];
+		peak0x560dbac42690 -> peak0x560dbac420f0
+	peak0x560dbac420f0 [label = "+"];
+		peak0x560dbac420f0 -> peak0x560dbac420c0
+	peak0x560dbac420c0 [label = "*"];
+		peak0x560dbac420c0 -> peak0x560dbac42090
+	peak0x560dbac42090 [label = "*"];
+		peak0x560dbac42090 -> peak0x560dbac42060
+	peak0x560dbac42060 [label = "-1" shape = box];
+		peak0x560dbac42090 -> peak0x560dbac42030
+	peak0x560dbac42030 [label = "*"];
+		peak0x560dbac42030 -> peak0x560dbac42000
+	peak0x560dbac42000 [label = "+"];
+		peak0x560dbac42000 -> peak0x560dbac41fd0
+	peak0x560dbac41fd0 [label = "*"];
+		peak0x560dbac41fd0 -> peak0x560dbac41fa0
+	peak0x560dbac41fa0 [label = "0" shape = box];
+		peak0x560dbac41fd0 -> peak0x560dbac41f70
+	peak0x560dbac41f70 [label = "x" shape = box];
+		peak0x560dbac42000 -> peak0x560dbac41f40
+	peak0x560dbac41f40 [label = "*"];
+		peak0x560dbac41f40 -> peak0x560dbac41f10
+	peak0x560dbac41f10 [label = "2" shape = box];
+		peak0x560dbac41f40 -> peak0x560dbac41ee0
+	peak0x560dbac41ee0 [label = "1" shape = box];
+		peak0x560dbac42030 -> peak0x560dbac41eb0
+	peak0x560dbac41eb0 [label = "sin"];
+		peak0x560dbac41eb0 -> peak0x560dbac41e20
+	peak0x560dbac41e20 [label = "*"];
+		peak0x560dbac41e20 -> peak0x560dbac41e50
+	peak0x560dbac41e50 [label = "2" shape = box];
+		peak0x560dbac41e20 -> peak0x560dbac41e80
+	peak0x560dbac41e80 [label = "x" shape = box];
+		peak0x560dbac420c0 -> peak0x560dbac41df0
+	peak0x560dbac41df0 [label = "x" shape = box];
+		peak0x560dbac420f0 -> peak0x560dbac41dc0
+	peak0x560dbac41dc0 [label = "*"];
+		peak0x560dbac41dc0 -> peak0x560dbac41d00
+	peak0x560dbac41d00 [label = "cos"];
+		peak0x560dbac41d00 -> peak0x560dbac41d30
+	peak0x560dbac41d30 [label = "*"];
+		peak0x560dbac41d30 -> peak0x560dbac41d60
+	peak0x560dbac41d60 [label = "2" shape = box];
+		peak0x560dbac41d30 -> peak0x560dbac41d90
+	peak0x560dbac41d90 [label = "x" shape = box];
+		peak0x560dbac41dc0 -> peak0x560dbac41cd0
+	peak0x560dbac41cd0 [label = "1" shape = box];
 }

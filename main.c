@@ -8,5 +8,8 @@ int main () {
 	tree_t *newtree = Differentiate (tree);
 	GVDump ("graphviz/new.gv", newtree);
 
+	Simplify (newtree);
+	GVDump ("graphviz/simple.gv", newtree);
+
 	exit (EXIT_SUCCESS);
 }
