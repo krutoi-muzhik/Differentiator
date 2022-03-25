@@ -10,7 +10,7 @@
 
 #define POISON 0xBEEBA
 
-typedef int data_t;
+typedef double data_t;
 
 typedef enum TYPES {
 	BINAR,
@@ -23,7 +23,6 @@ typedef struct branch {
 	data_t data;
 	struct branch *right;
 	struct branch *left;
-	struct branch *parent;
 	branch_type_t type;
 } branch_t;
 
@@ -37,20 +36,21 @@ typedef enum ERRORS {
 	INVALID_SIZE
 } tree_error_t;
 
-branch_t *Branch (branch_t *parent, data_t data);
-branch_t *Branch_ (branch_t *parent, data_t data, branch_type_t type);
+branch_t *Branch (data_t data, branch_t *left, branch_t *right);
+branch_t *Branch_ (data_t data, branch_type_t type, branch_t *left, branch_t *right);
 void RecursiveDestruct (branch_t *branch);
 void TreeConstruct (tree_t *tree);
 void TreeDestruct (tree_t *tree);
 void InsertBranch (branch_t *parent, size_t dir, data_t data);
 
 size_t GetNum (char *buf, branch_t *branch);
-size_t GetPlus (char *buf, branch_t **current);
+size_t GetAddSub (char *buf, branch_t **current);
 size_t GetPow (char *buf, branch_t **current);
 size_t GetLog (char *buf, branch_t **current);
 size_t GetLow (char *buf, branch_t *branch);
 size_t GetFunc (char *buf, branch_t *current);
 size_t GetVar (char *buf, branch_t *branch);
+size_t GetMulDiv (char *buf, branch_t **current);
 
 int isoper (char c);
 
@@ -69,7 +69,7 @@ enum SIZES {
 };
 
 enum BINARS {
-	PLUS = '+',
+	ADD = '+',
 	MINUS = '-',
 	POW = '^',
 	MUL = '*',

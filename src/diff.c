@@ -14,7 +14,7 @@ tree_t TreeCopy (tree_t *oldtree) {
 }
 
 branch_t *BranchCopy (branch_t *oldbranch) {
-	branch_t *newbranch = Branch_ (oldbranch->parent, oldbranch->data, oldbranch->type);
+	branch_t *newbranch = Branch_ (oldbranch->data, oldbranch->type, NULL, NULL);
 	if (oldbranch->left != NULL)
 		newbranch->left = BranchCopy (oldbranch->left);
 	if (oldbranch->right != NULL)
@@ -22,19 +22,13 @@ branch_t *BranchCopy (branch_t *oldbranch) {
 	return newbranch;
 }
 
-branch_t *BranchCopy_ (branch_t *oldbranch, branch_t *parent) {
-	branch_t *newbranch = BranchCopy (oldbranch);
-	newbranch->parent = parent;
-	return newbranch;
-}
-
-branch_t *BranchDiff_ (branch_t *oldbranch, branch_t *parent) {
+branch_t *BranchDiff_ (branch_t *oldbranch) {
 	switch (oldbranch->type):
 		case NUM:
-			branch_t *newbranch = Branch_ (parent, 0, NUM);
+			return Branch_ (0, NUM, NULL, NULL);
 			break;
 		case VAR:
-			branch_t *newbranch = Branch_ (parent, 1, NUM);
+			return Branch_ (1, NUM, NULL, NULL);
 			break;
 		case BINAR:
 			#define DEF_BINAR(oper, oper_num, count_, diff_) {	\
@@ -58,12 +52,7 @@ branch_t *BranchDiff_ (branch_t *oldbranch, branch_t *parent) {
 
 		default: printf ("unknown type\n");
 
-	return newbranch;
-}
-
-branch_t *BranchDiff (branch_t *oldbranch) {
-	branch_t *newbranch = BranchDiff_ (oldbranch, NULL);
-	return newbranch;
+	return NULL;
 }
 
 int Const (branch_t *branch) {

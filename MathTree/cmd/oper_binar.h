@@ -1,76 +1,59 @@
-DEF_BINAR (PLUS, '+', {
+#define L BranchCopy (oldbranch->left)
+#define R BranchCopy (oldbranch->right)
+#define dR BranchDiff (oldbranch->right)
+#define dL BranchDiff (oldbranch->left)
+#define ADD_(right, left) Branch_ (ADD, BINAR, right, left)
+#define SUB_(right, left) Branch_ (SUB, BINAR, right, left)
+#define MUL_(right, left) Branch_ (MUL, BINAR, right, left)
+#define DIV_(right, left) Branch_ (DIV, BINAR, right, left)
+#define POW_(right, left) Branch_ (POW, BINAR, right, left)
+#define LOG_(right, left) Branch_ (LOG, BINAR, right, left)
+#define LN_(left) Branch_ (LN, UNAR, left, NULL)
+
+DEF_BINAR (ADD, '+', {
 	return Count (branch->left) + Count (branch->right);
 }, {
-	branch_t *newbranch = Branch_ (parent, PLUS, BINAR);
-
-	newbranch->left = BranchDiff_ (oldbranch->left, newbranch);
-	newbranch->right = BranchDiff (oldbranch->right, newbranch);
+	return ADD_ (dL, dR);
 })
 
-DEF_BINAR (MINUS, '-', {
+DEF_BINAR (SUB, '-', {
 	return Count (branch->left) - Count (branch->right);
 }, {
-	branch_t *newbranch = Branch_ (parent, MINUS, BINAR);
-
-	newbranch->left = BranchDiff (oldbranch->left, newbranch);
-	newbranch->right = BranchDiff (oldbranch->right, newbranch);
+	return SUB_ (dL, dR);
 })
 
 DEF_BINAR (MUL, '*', {
 	return Count (branch->left) * Count (branch->right);
 }, {
-	branch_t *newbranch = Branch_ (parent, PLUS, BINAR);
-
-	newbranch->left = Branch_ (newbranch, MUL, BINAR);
-	newbranch->left->left = BranchDiff_ (oldbranch->left, newbranch->left);
-	newbranch->left->right = BranchCopy_ (oldbranch->right, newbranch->left);
-
-	newbranch->right = Branch_ (newbranch, MUL, BINAR);
-	newbranch->right->left = BranchCopy_ (oldbranch->left, newbranch->right);
-	newbranch->right->right = BranchDiff_ (oldbranch->right, newbranch->right);
+	branch_t *newbranch = ADD_ (MUL_ (dL, R), MUL_ (L, dR));
 })
 
 DEF_BINAR (DIV, '/', {
 	return Count (branch->left) / Count (branch->right);
 }, {
-	branch_t *newbranch = Branch_ (parent, DIV, BINAR);
-
-	newbranch->right = Branch_ (newbranch, POW, BINAR);
-	newbranch->right->left = BranchCopy_ (oldbranch->right, newbranch->right);
-	newbranch->right->right = Branch_ (newbranch->right, 2, NUM);
-
-	newbranch->left = Branch_ (newbranch, MINUS, BINAR);
-
-	newbranch->left->left = Branch_ (newbranch->left, MUL, BINAR);
-	newbranch->left->left->left = BranchDiff_ (oldbranch->left, newbranch->left->left);
-	newbranch->left->left->right = BranchCopy_ (oldbranch->right, newbranch->left->left);
-
-	newbranch->left->right = Branch_ (newbranch->left, NUL, BINAR);
-	newbranch->left->right->left = BranchCopy_ (oldbranch->left, newbranch->left->right);
-	newbranch->left->right->right = BranchDiff_ (oldbranch->right, newbranch->left->right);
+	branch_t *newbranch = DIV_ (SUB_ (MUL_ (dL, R), MUL_ (L, dR)), POW_ (R, Branch_ (2, NUM, NULL, NULL)));
 })
 
 DEF_BINAR (POW, '^', {
 	return powf (Count (branch->left), Count (branch->right));
 }, {
-	branch_t *newbranch = Branch_ (parent, MUL, BINAR);
-
-	newbranch->left = Branch_ (newbranch, POW, BINAR);
-	newbranch->left->left = BranchCopy_ (oldbranch->left, newbranch->left);
-	newbranch->left->right = BranchCopy_ (oldbranch->right, newbranch->left);
-
-	newbranch->right = Branch_ (newbranch, PLUS, BINAR);
-
-	newbranch->right->left = Branch_ (newbranch->right, MUL, BINAR);
-	newbranch->right->left->left = BranchDiff_ (oldbranch->right, newbranch->right->left);
-	newbranch->right->left->right = Branch_ (newbranch->right->left, LN, UNAR);
-	newbranch->right->left->right->left = BranchCopy_ (oldbranch->left, newbranch->right->left->right);
-
-	newbranch->right->right = Branch_ (newbranch->right, DIV, BINAR);
+	return MUL_ (POW_ (L, R), ADD_ (MUL_ (dR, LN_ (L)), DIV_ (MUL_ (dL, R), L)));
 })
 
 DEF_BINAR (LOG, "log", {
 	return log (Count (branch->right)) / log (Count (branch->left));
 }, {
-
+	return ADD_ (DIV_ (dR, MUL_ (R, LN_ (L))), DIV_ (LN (R), MUL_ (L, POW_ (LN (L), 2))));
 })
+
+#undef L
+#undef R
+#undef dL
+#undef dR
+#undef LOG_
+#undef POW_
+#undef ADD_
+#undef SUB_
+#undef MUL_
+#undef DIV_
+#undef LN_

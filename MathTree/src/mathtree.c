@@ -1,16 +1,15 @@
 #include "../include/mathtree.h"
 #include <math.h>
 
-branch_t *Branch (branch_t *parent, data_t data) {
+branch_t *Branch (data_t data, branch_t *left,, branch_t *right) {
 	branch_t *branch = calloc (1, sizeof (branch_t));
 	branch->data = data;
-	branch->parent = parent;
-	branch->left = NULL;
-	branch->right = NULL;
+	branch->left = left;
+	branch->right = right;
 	return branch;
 }
 
-branch_t *Branch_ (branch_t *parent, data_t data, branch_type_t type) {
+branch_t *Branch_ (data_t data, branch_type_t type, branch_t *left, branch_t *right) {
 	branch_t *branch = Branch (parent, data);
 	branch->type = type;
 	return branch;
@@ -29,23 +28,28 @@ void RecursiveDestruct (branch_t *branch) {
 		// if (branch->right == NULL)
 		// 	printf ("\n%d right -> null\n\n", branch->data);
 	}
+
 	#ifdef DINAMIC_DATA
-	free (branch->data);
+		free (branch->data);
 	#endif
 
 	free (branch);
 	return;
 }
 
-void TreeConstruct (tree_t *tree) {
-	tree->root = Branch (NULL, POISON);
+tree_t *TreeConstruct () {
+	tree_t *tree = calloc (1, sizeof (tree_t));
+	tree->root = Branch (POISON, NULL, NULL);
 	tree->size = 0;
+	return tree;
 }
 
 void TreeDestruct (tree_t *tree) {
 	RecursiveDestruct (tree->root);
 	tree->root = NULL;
 	tree->size = 0;
+	free (tree);
+	return;
 }
 
 #define Out(func) fprintf (graph, "\tpeak%p [label = \"%s\"];\n", branch, func); break;
@@ -54,8 +58,8 @@ void Graph (FILE *graph, branch_t *branch) {
 	switch (branch->type) {
 		case BINAR:
 			switch (branch->data) {
-				case PLUS:	Out("+")
-				case MINUS:	Out("-")
+				case ADD:	Out("+")
+				case SUB:	Out("-")
 				case MUL:	Out("*")
 				case DIV:	Out("/")
 				case POW:	Out("^")
@@ -115,21 +119,6 @@ void GVDump (const char *pathname, tree_t *tree) {
 	Graph (graph, branch);
 	fprintf (graph, "}\n");
 	fclose (graph);
-	return;
-}
-
-void InsertBranch (branch_t *parent, size_t dir, data_t data) {
-	branch_t *tmp;
-	if (dir) {
-		tmp = parent->right;
-		parent->right = Branch (parent, data);
-		parent->right->left = tmp;
-	}
-	else {
-		tmp = parent->left;
-		parent->left = Branch (parent, data);
-		parent->left->left = tmp;
-	}
 	return;
 }
 
@@ -220,13 +209,11 @@ size_t GetMulDiv (char *buf, branch_t **current) {
 	skipspace
 
 	while ((buf[len] == '*') || (buf[len] == '/')) {
-		(*current)->parent = Branch_ (NULL, buf[len], BINAR);
-		(*current)->parent->left = (*current);
-		(*current) = (*current)->parent;
+		*current = Branch_ (buf[len], BINAR, *current, NULL);
 
 		len++;
 		skipspace
-		(*current)->right = Branch (*current, POISON);
+		(*current)->right = Branch (POISON, NULL, NULL);
 		len += GetLog (buf + len, &(*current)->right);
 
 		skipspace
@@ -234,20 +221,18 @@ size_t GetMulDiv (char *buf, branch_t **current) {
 	return len;
 }
 
-size_t GetPlusMinus (char *buf, branch_t **current) {
+size_t GetAddSub (char *buf, branch_t **current) {
 	size_t len = 0;
 	skipspace
 	len += GetMulDiv (buf + len, current);
 	skipspace
 
 	while ((buf[len] == '+') || (buf[len] == '-')) {
-		(*current)->parent = Branch_ (NULL, buf[len], BINAR);
-		(*current)->parent->left = (*current);
-		(*current) = (*current)->parent;
+		*current = Branch_ (buf[len], BINAR, *current, NULL);
 
 		len++;
 		skipspace
-		(*current)->right = Branch (*current, POISON);
+		(*current)->right = Branch (POISON, NULL, NULL);
 		len += GetMulDiv (buf + len, &((*current)->right));
 
 		skipspace
@@ -262,13 +247,11 @@ size_t GetPow (char *buf, branch_t **current) {
 	skipspace
 
 	if (buf[len] == '^') {
-		(*current)->parent = Branch_ (NULL, '^', BINAR);
-		(*current)->parent->left = (*current);
-		(*current) = (*current)->parent;
+		*current = Branch_ ('^', BINAR, *current, NULL);
 
 		len++;
 		skipspace
-		(*current)->right = Branch (*current, POISON);
+		(*current)->right = Branch (POISON, NULL, NULL);
 		len += GetLow (buf + len, (*current)->right);
 
 		skipspace
@@ -283,13 +266,11 @@ size_t GetLog (char *buf, branch_t **current) {
 	skipspace
 
 	if ((buf[len] == 'l') && (buf[len + 1] == 'o') && (buf[len + 2] == 'g')) {
-		(*current)->parent = Branch_ (NULL, LOG, BINAR);
-		(*current)->parent->left = (*current);
-		(*current) = (*current)->parent;
+		*current = Branch_ (LOG, BINAR, *current, NULL);
 
 		len += 3;
 		skipspace
-		(*current)->right = Branch (*current, POISON);
+		(*current)->right = Branch (POISON, NULL, NULL);
 		len += GetPow (buf + len, &(*current)->right);
 
 		skipspace
@@ -319,8 +300,8 @@ size_t GetFunc (char *buf, branch_t *current) {
 	#define DEF_UNAR(oper_num, oper, count_, diff_) {				\
 		if (!strcmp (oper, func)) {									\
 			current->data = oper_num;								\
-			current->left = Branch (current, POISON);				\
-			len += GetPlusMinus (buf + len, &(current->left));		\
+			current->left = Branch (POISON, NULL, NULL);			\
+			len += GetAddSub (buf + len, &(current->left));		\
 		}															\
 	}																// end of define
 
@@ -335,7 +316,7 @@ size_t GetFunc (char *buf, branch_t *current) {
 }
 
 int isoper (char c) {
-	if ((c == MINUS) || (c == PLUS) || (c == POW) || (c == DIV) || (c == MUL))
+	if ((c == SUB) || (c == ADD) || (c == POW) || (c == DIV) || (c == MUL))
 		return 1;
 	return 0;
 }
@@ -348,9 +329,9 @@ tree_t *Input (const char *pathname) {
 	size_t len = 0;
 	size_t nread = fread (buf, sizeof (char), BUF_SIZE, inp);
 	fclose (inp);
-	branch_t *tmp = Branch (NULL, POISON);
+	branch_t *tmp = Branch (POISON, NULL, NULL);
 
-	len = GetPlusMinus (buf, &tmp);
+	len = GetAddSub (buf, &tmp);
 	tree->root = tmp;
 	printf ("nread = %ld, len = %ld\n", nread, len);
 
