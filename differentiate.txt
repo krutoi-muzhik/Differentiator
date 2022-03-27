@@ -1,0 +1,5 @@
+Thanks for using DIFFERENTIATOR by krutoi muzhik 
+f(x) = x * (1.000 + sin (x))
+f'(x) = 1.000 * (1.000 + sin (x)) + x * (0.000 + 1.000 * cos (x))
+ufter simplifying:
+= 1.000 + sin (x) + x * cos (x)

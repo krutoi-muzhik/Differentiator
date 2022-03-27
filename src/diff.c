@@ -1,12 +1,5 @@
 #include "../include/diff.h"
 
-#define MicroConst 0.0001
-
-int IsEqual (double a, double b) {
-	if (fabs (a - b) <= MicroConst) return 1;
-	return 0;
-}
-
 tree_t *Differentiate (tree_t *tree) {
 	tree_t *newtree = calloc (1, sizeof (tree_t));
 	newtree->root = BranchDiff_ (tree->root);
@@ -118,7 +111,7 @@ branch_t *BranchSimple (branch_t *branch) {
 		branch->right = BranchSimple (branch->right);
 		branch->left = BranchSimple (branch->left);
 
-		switch (branch->data) {
+		switch ((int) branch->data) {
 			case MUL:
 				if (IsConst (branch->right)) {
 					double res = Count (branch->right);

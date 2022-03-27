@@ -1,6 +1,14 @@
 #include "../include/mathtree.h"
 #include <math.h>
 
+
+#define MicroConst 0.0001
+
+int IsEqual (double a, double b) {
+	if (fabs (a - b) <= MicroConst) return 1;
+	return 0;
+}
+
 branch_t *Branch (data_t data, branch_t *left, branch_t *right) {
 	branch_t *branch = calloc (1, sizeof (branch_t));
 	branch->data = data;
@@ -57,7 +65,7 @@ void TreeDestruct (tree_t *tree) {
 void Graph (FILE *graph, branch_t *branch) {
 	switch (branch->type) {
 		case BINAR:
-			switch (branch->data) {
+			switch ((int) branch->data) {
 				case ADD:	Out("+")
 				case SUB:	Out("-")
 				case MUL:	Out("*")
@@ -67,7 +75,7 @@ void Graph (FILE *graph, branch_t *branch) {
 			}
 			break;
 		case UNAR:
-			switch (branch->data) {
+			switch ((int) branch->data) {
 				case SIN:	Out("sin")
 				case COS:	Out("cos")
 				case TAN:	Out("tan")
@@ -90,14 +98,14 @@ void Graph (FILE *graph, branch_t *branch) {
 				case LG:	Out("lg")
 				case FACT:	Out("fact")
 				case ABS:	Out("abs")
-				default: printf ("unlnown oper %d\n", branch->data);
+				default: printf ("unknown oper %.3lf\n", branch->data);
 			}
 			break;
 		case VAR:
-			fprintf (graph, "\tpeak%p [label = \"%c\" shape = box];\n", branch, branch->data);
+			fprintf (graph, "\tpeak%p [label = \"%c\" shape = box];\n", branch, (int) branch->data);
 			break;
 		case NUM:
-			fprintf (graph, "\tpeak%p [label = \"%d\" shape = box];\n", branch, branch->data);
+			fprintf (graph, "\tpeak%p [label = \"%.3lf\" shape = box];\n", branch, branch->data);
 			break;
 	}
 
@@ -111,6 +119,8 @@ void Graph (FILE *graph, branch_t *branch) {
 	}
 	return;
 }
+
+#undef Out
 
 void GVDump (const char *pathname, tree_t *tree) {
 	FILE *graph = fopen (pathname, "w");
@@ -148,27 +158,40 @@ double Count (branch_t *branch) {
 	return 0;
 }
 
-void Calculate (tree_t *tree) {
+double Calculate (tree_t *tree) {
 	double cnt = Count (tree->root);
-	printf ("%lf\n", cnt);
+	printf ("%.3lf\n", cnt);
+	return cnt;
 }
 
 #define skipspace while (isspace (buf[len])) len++;
 
 #define skiptill(c) while (buf[len] != c) len++;
 
-size_t GetLow (char *buf, branch_t *branch) {
+size_t GetLow (char *buf, branch_t **branch) {
+	if (buf[0] == '(')
+		return GetBracket (buf, branch);
 	if (isalpha (buf[0])) {
-		printf ("%c is alpha\n", buf[0]);
+		// printf ("%c is alpha\n", buf[0]);
 		size_t len = 0;
 		while (isalpha (buf[len])) len++;
 		skipspace
 
 		if (buf[len] == '(')
-			return GetFunc (buf, branch);
-		return GetVar (buf, branch);
+			return GetFunc (buf, *branch);
+		return GetVar (buf, *branch);
 	}
-	return GetNum (buf, branch);
+	return GetNum (buf, *branch);
+}
+
+size_t GetBracket (char *buf, branch_t **branch) {
+	size_t len = 0;
+	skiptill ('(')
+	len ++;
+	len += GetAddSub (buf + len, branch);
+	skiptill (')')
+	len ++;
+	return len;
 }
 
 size_t GetVar (char *buf, branch_t *branch) {
@@ -243,7 +266,7 @@ size_t GetAddSub (char *buf, branch_t **current) {
 size_t GetPow (char *buf, branch_t **current) {
 	size_t len = 0;
 	skipspace
-	len += GetLow (buf + len, *current);
+	len += GetLow (buf + len, current);
 	skipspace
 
 	if (buf[len] == '^') {
@@ -252,7 +275,7 @@ size_t GetPow (char *buf, branch_t **current) {
 		len++;
 		skipspace
 		(*current)->right = Branch (POISON, NULL, NULL);
-		len += GetLow (buf + len, (*current)->right);
+		len += GetLow (buf + len, &(*current)->right);
 
 		skipspace
 	}
@@ -315,6 +338,9 @@ size_t GetFunc (char *buf, branch_t *current) {
 
 }
 
+#undef skiptill
+#undef skipspace
+
 int isoper (char c) {
 	if ((c == SUB) || (c == ADD) || (c == POW) || (c == DIV) || (c == MUL))
 		return 1;
@@ -332,31 +358,80 @@ tree_t *Input (const char *pathname) {
 
 	len = GetAddSub (buf, &tmp);
 	tree->root = tmp;
-	printf ("nread = %ld, len = %ld\n", nread, len);
+	// printf ("nread = %ld, len = %ld\n", nread, len);
 
 	return tree;
 }
 
 void BranchOut (FILE *out, branch_t *branch) {
-	if (branch->type == NUM) {
-		fprintf (out, "%d ", branch->data);
-		return;
+	switch (branch->type) {
+		case NUM:
+			fprintf (out, "%.3lf", branch->data);
+			break;
+
+		case BINAR:
+			if (Prior (branch->left) > Prior (branch)) {
+				fprintf (out, "(");
+				BranchOut (out, branch->left);
+				fprintf (out, ")");
+			} else BranchOut (out, branch->left);
+
+			if (IsEqual (branch->data, LOG))
+				fprintf (out, " log ");
+			else
+				fprintf (out, " %c ", (int) branch->data);
+			
+			if (Prior (branch->right) > Prior (branch)) {
+				fprintf (out, "(");
+				BranchOut (out, branch->right);
+				fprintf (out, ")");
+			} else BranchOut (out, branch->right);
+			break;
+
+		case UNAR:
+			#define DEF_UNAR(oper_num, oper, calc_, diff_) {	\
+				if (branch->data == oper_num) {					\
+					fprintf (out, "%s (", oper);				\
+					BranchOut (out, branch->left);				\
+					fprintf (out, ")");						\
+				}												\
+			}													// end of define
+			#include "../cmd/oper_unar.h"
+			#undef DEF_UNAR
+			break;
+
+		case VAR:
+			fprintf (out, "%c", (int) branch->data);
+			break;
+
+		default:
+			printf ("unknown branch type\n");
 	}
-	if (branch->type == BINAR) {
-		BranchOut (out, branch->left);
-		fprintf (out, "%c ", branch->data);
-		BranchOut (out, branch->right);
-		return;
-	}
-	printf ("unknown branch type\n");
 	return;
 }
 
 void TreeOut (const char *pathname, tree_t* tree) {
 	FILE *out = fopen (pathname, "w");
-	fprintf (out, "CALCULATOR by krutoi_muzhik crated this base\n\n");
 	BranchOut (out, tree->root);
 	fclose (out);
 	return;
 }
 
+int Prior (branch_t *branch) {
+	switch (branch->type) {
+		case NUM: return 0;
+		case VAR: return 0;
+		case UNAR: return 1;
+		case BINAR:
+			switch ((int) branch->data) {
+				case POW: return 2;
+				case LOG: return 3;
+				case MUL: return 4;
+				case DIV: return 4;
+				case ADD: return 5;
+				case SUB: return 5;
+				default: printf ("unknown binar operator %.3lf\n", branch->data); return UNKNOWN_OPER;
+			}
+		default: printf ("unknown branch type\n"); return UNKNOWN_TYPE;
+	}
+}

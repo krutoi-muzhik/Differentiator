@@ -1,7 +1,11 @@
 digraph TREE {
 
 	peak0x55f96f1bbac0 [label = "+"];
-		peak0x55f96f1bbac0 -> peak0x55f96f1bb9a0
+		peak0x55f96f1bbac0 -> peak0x55f96f1bba90
+	peak0x55f96f1bba90 [label = "*"];
+		peak0x55f96f1bba90 -> peak0x55f96f1bba60
+	peak0x55f96f1bba60 [label = "1.000" shape = box];
+		peak0x55f96f1bba90 -> peak0x55f96f1bb9a0
 	peak0x55f96f1bb9a0 [label = "+"];
 		peak0x55f96f1bb9a0 -> peak0x55f96f1bb9d0
 	peak0x55f96f1bb9d0 [label = "1.000" shape = box];
@@ -13,7 +17,15 @@ digraph TREE {
 	peak0x55f96f1bb970 [label = "*"];
 		peak0x55f96f1bb970 -> peak0x55f96f1bb940
 	peak0x55f96f1bb940 [label = "x" shape = box];
-		peak0x55f96f1bb970 -> peak0x55f96f1bb850
+		peak0x55f96f1bb970 -> peak0x55f96f1bb910
+	peak0x55f96f1bb910 [label = "+"];
+		peak0x55f96f1bb910 -> peak0x55f96f1bb8e0
+	peak0x55f96f1bb8e0 [label = "0.000" shape = box];
+		peak0x55f96f1bb910 -> peak0x55f96f1bb8b0
+	peak0x55f96f1bb8b0 [label = "*"];
+		peak0x55f96f1bb8b0 -> peak0x55f96f1bb880
+	peak0x55f96f1bb880 [label = "1.000" shape = box];
+		peak0x55f96f1bb8b0 -> peak0x55f96f1bb850
 	peak0x55f96f1bb850 [label = "cos"];
 		peak0x55f96f1bb850 -> peak0x55f96f1bb820
 	peak0x55f96f1bb820 [label = "x" shape = box];

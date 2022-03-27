@@ -1,0 +1,14 @@
+digraph TREE {
+
+	peak0x55f96f1ba6e0 [label = "*"];
+		peak0x55f96f1ba6e0 -> peak0x55f96f1ba6b0
+	peak0x55f96f1ba6b0 [label = "x" shape = box];
+		peak0x55f96f1ba6e0 -> peak0x55f96f1ba740
+	peak0x55f96f1ba740 [label = "+"];
+		peak0x55f96f1ba740 -> peak0x55f96f1ba710
+	peak0x55f96f1ba710 [label = "1.000" shape = box];
+		peak0x55f96f1ba740 -> peak0x55f96f1ba770
+	peak0x55f96f1ba770 [label = "sin"];
+		peak0x55f96f1ba770 -> peak0x55f96f1ba7c0
+	peak0x55f96f1ba7c0 [label = "x" shape = box];
+}
