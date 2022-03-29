@@ -1,14 +1,40 @@
 digraph TREE {
 
-	peak0x55f96f1ba6e0 [label = "*"];
-		peak0x55f96f1ba6e0 -> peak0x55f96f1ba6b0
-	peak0x55f96f1ba6b0 [label = "x" shape = box];
-		peak0x55f96f1ba6e0 -> peak0x55f96f1ba740
-	peak0x55f96f1ba740 [label = "+"];
-		peak0x55f96f1ba740 -> peak0x55f96f1ba710
-	peak0x55f96f1ba710 [label = "1.000" shape = box];
-		peak0x55f96f1ba740 -> peak0x55f96f1ba770
-	peak0x55f96f1ba770 [label = "sin"];
-		peak0x55f96f1ba770 -> peak0x55f96f1ba7c0
-	peak0x55f96f1ba7c0 [label = "x" shape = box];
+	peak0x55f5df534910 [label = "+"];
+		peak0x55f5df534910 -> peak0x55f5df534860
+	peak0x55f5df534860 [label = "-"];
+		peak0x55f5df534860 -> peak0x55f5df5347a0
+	peak0x55f5df5347a0 [label = "-"];
+		peak0x55f5df5347a0 -> peak0x55f5df534740
+	peak0x55f5df534740 [label = "-"];
+		peak0x55f5df534740 -> peak0x55f5df5346e0
+	peak0x55f5df5346e0 [label = "*"];
+		peak0x55f5df5346e0 -> peak0x55f5df5346b0
+	peak0x55f5df5346b0 [label = "2.000" shape = box];
+		peak0x55f5df5346e0 -> peak0x55f5df534710
+	peak0x55f5df534710 [label = "x" shape = box];
+		peak0x55f5df534740 -> peak0x55f5df534770
+	peak0x55f5df534770 [label = "3.000" shape = box];
+		peak0x55f5df5347a0 -> peak0x55f5df534800
+	peak0x55f5df534800 [label = "^"];
+		peak0x55f5df534800 -> peak0x55f5df5347d0
+	peak0x55f5df5347d0 [label = "x" shape = box];
+		peak0x55f5df534800 -> peak0x55f5df534830
+	peak0x55f5df534830 [label = "3.000" shape = box];
+		peak0x55f5df534860 -> peak0x55f5df534890
+	peak0x55f5df534890 [label = "sin"];
+		peak0x55f5df534890 -> peak0x55f5df5348e0
+	peak0x55f5df5348e0 [label = "x" shape = box];
+		peak0x55f5df534910 -> peak0x55f5df534a20
+	peak0x55f5df534a20 [label = "*"];
+		peak0x55f5df534a20 -> peak0x55f5df534940
+	peak0x55f5df534940 [label = "cos"];
+		peak0x55f5df534940 -> peak0x55f5df5349c0
+	peak0x55f5df5349c0 [label = "*"];
+		peak0x55f5df5349c0 -> peak0x55f5df534990
+	peak0x55f5df534990 [label = "2.000" shape = box];
+		peak0x55f5df5349c0 -> peak0x55f5df5349f0
+	peak0x55f5df5349f0 [label = "x" shape = box];
+		peak0x55f5df534a20 -> peak0x55f5df534a50
+	peak0x55f5df534a50 [label = "x" shape = box];
 }
