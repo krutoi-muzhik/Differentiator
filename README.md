@@ -8,7 +8,7 @@ The big part of programm is my library of tree for math expressions. You can see
 
 The kernel of programm is function BranchDiff_ that works recursively
 
-'''C
+```C
 branch_t *BranchDiff_ (branch_t *oldbranch) {
 	switch (oldbranch->type) {
 		case NUM:
@@ -35,5 +35,4 @@ branch_t *BranchDiff_ (branch_t *oldbranch) {
 	}
 	return NULL;
 }
-
-'''
+```
