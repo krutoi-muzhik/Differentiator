@@ -56,7 +56,7 @@ DEF_BINAR (MUL, '*', {
 
 The first block of code is for calculator, to calculate the containment of tree branches below and multiply them.
 
-The second block of code is used by differentiator to use derivative's of left and right branches and join them using math rules, that everybody knows.
+The second block of code is used by differentiator to use derivatives of left and right branches and join them using math rules, that everybody knows.
 
 MUL_ and ADD_ instructions are defined as:
 
