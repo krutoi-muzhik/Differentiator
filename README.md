@@ -120,9 +120,13 @@ And after simplifying we get f'(x) = 2 - x ^ 3 * 3 / x - cos (x) + -1 * 2 * sin 
 And using GraphViz dump we can see the tree:
 
 Primary:
-![primary](https://github.com/krutoi-muzhik/Differentiator/blob/main/graphviz/primary.png)
-After differentiating:
-![Unsimplified](https://github.com/krutoi-muzhik/Differentiator/blob/main/graphviz/deffer.png)
-After simplifying:
-![Simplified](https://github.com/krutoi-muzhik/Differentiator/blob/main/graphviz/simple.png)
 
+![primary](https://github.com/krutoi-muzhik/Differentiator/blob/main/graphviz/primary.png)
+
+After differentiating:
+
+![Unsimplified](https://github.com/krutoi-muzhik/Differentiator/blob/main/graphviz/deffer.png)
+
+After simplifying:
+
+![Simplified](https://github.com/krutoi-muzhik/Differentiator/blob/main/graphviz/simple.png)
