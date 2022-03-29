@@ -2,6 +2,16 @@
 
 As the name of the programm implies, it is designed to calculate the derivative of any function you want.
 
+# Run
+
+To compile clone the repo and use "make diff"
+
+Write the function you want to differentiate in file "input.txt"
+
+Use "make run" to run the programm, and the derivative will be written in "differetiate.txt"
+
+After all use "make clean" to delete all object and executable files 
+
 # Implementation
 
 
